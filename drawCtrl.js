@@ -16,6 +16,8 @@ var dx = -2;
 var dy = 2;
 var offsetX = 0;
 var offsetY = 0;
+var lastOffsetX = 0; // 충돌 처리 후 복구하기 위함
+var lastOffsetY = 0;
 var moveAmount = 12;
 
 var getTouchPos = function (touchEvent) {
@@ -85,6 +87,8 @@ var setLastInput = function (buttonNum) {
 }
 
 var updateDrawOffset = function () {
+    lastOffsetX = offsetX;
+    lastOffsetY = offsetY;
     switch (lastInputButton) {
         case TOUCH_UPPER_LEFT:
             offsetX += moveAmount;
@@ -118,6 +122,33 @@ var updateDrawOffset = function () {
             break;
     }
 
-    mazeBlockX = Math.floor(-(offsetX - blockOffset) / blockWidth);
-    mazeBlockY = Math.floor(-(offsetY - blockOffset) / blockWidth);
+    if (!checkCollisionWall()) {
+        mazeBlockX = Math.floor(-(offsetX - blockOffset) / blockWidth);
+        mazeBlockY = Math.floor(-(offsetY - blockOffset) / blockWidth);
+    }
+}
+
+var checkCollisionWall = function () {
+    if (mazeBlockX < 0 || mazeBlockX >= mazeMaxSize || mazeBlockY < 0 || mazeBlockY >= mazeMaxSize) return;
+
+    var block = mazeData[mazeBlockY][mazeBlockX];
+    var currentXInBlock = blockOffset - (blockWidth * mazeBlockX) - offsetX;
+    var currentYInBlock = blockOffset - (blockWidth * mazeBlockY) - offsetY;
+
+    var outerTileSize = tileSize * lastTileIndex - charSize;
+    var topBlock = (!block.top && currentYInBlock < tileSize);
+    var leftBlock = (!block.left && currentXInBlock < tileSize);
+    var rightBlock = (!block.right && currentXInBlock > outerTileSize);
+    var bottomBlock = (!block.bottom && currentYInBlock > outerTileSize);
+    var cornerBlock = (currentXInBlock < tileSize && currentYInBlock < tileSize) ||
+        (currentXInBlock < tileSize && currentYInBlock > outerTileSize) ||
+        (currentXInBlock > outerTileSize && currentYInBlock < tileSize) ||
+        (currentXInBlock > outerTileSize && currentYInBlock > outerTileSize);
+
+    if (topBlock || leftBlock || rightBlock || bottomBlock || cornerBlock) {
+        offsetX = lastOffsetX;
+        offsetY = lastOffsetY;
+        return true;
+    }
+    return false;
 }
