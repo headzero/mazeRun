@@ -19,6 +19,7 @@ var offsetY = 0;
 var lastOffsetX = 0; // 충돌 처리 후 복구하기 위함
 var lastOffsetY = 0;
 var moveAmount = 12;
+var isFinish = false;
 
 var getTouchPos = function (touchEvent) {
     return {
@@ -72,9 +73,15 @@ var drawBlock = function (mazeIndexX, mazeIndexY) {
                 (!block.left && x == 0) || (!block.right && x == lastTileIndex)) {
                 createBlock(1, blockOffsetX, blockOffsetY);
             } else {
-                createBlock(2, blockOffsetX, blockOffsetY);
+                createBlock(0, blockOffsetX, blockOffsetY);
             }
         }
+    }
+    if (mazeIndexX == mazeMaxSize - 1 && mazeIndexY == mazeMaxSize - 1) {
+        createBlock(2,
+            (tileSize * 2) - blockOffset + (mazeIndexX * blockWidth),
+            (tileSize * 2) - blockOffset + (mazeIndexY * blockWidth)
+        );
     }
 }
 
@@ -87,6 +94,7 @@ var setLastInput = function (buttonNum) {
 }
 
 var updateDrawOffset = function () {
+    if (isFinish) return;
     lastOffsetX = offsetX;
     lastOffsetY = offsetY;
     switch (lastInputButton) {
@@ -149,6 +157,10 @@ var checkCollisionWall = function () {
         offsetX = lastOffsetX;
         offsetY = lastOffsetY;
         return true;
+    } else if ((mazeBlockX == mazeMaxSize - 1 && mazeBlockY == mazeMaxSize - 1) &&
+        currentXInBlock > tileSize && currentYInBlock > tileSize) {
+        isFinish = true;
+        alert("Success!!!");
     }
     return false;
 }
