@@ -10,16 +10,16 @@ var WAY_TOP = 1;
 var WAY_RIGHT = 2;
 var WAY_BOTTOM = 3;
 
-var mazeMap;
+var mazeData;
 var mazeMaxSize = 0;
 
 var makeMap = function (mazeSize) {
     mazeMaxSize = mazeSize;
-    mazeMap = new Array(mazeSize);
+    mazeData = new Array(mazeSize);
     for (var i = 0; i < mazeSize; i++) {
-        mazeMap[i] = new Array(mazeSize);
+        mazeData[i] = new Array(mazeSize);
         for (var j = 0; j < mazeSize; j++) {
-            mazeMap[i][j] = {
+            mazeData[i][j] = {
                 left: false,
                 top: false,
                 right: false,
@@ -29,8 +29,8 @@ var makeMap = function (mazeSize) {
             };
         }
     }
-    console.log(mazeMap);
-    mazeMap[0][0].created = true;
+    console.log(mazeData);
+    mazeData[0][0].created = true;
     makeBlock(0, 0);
 }
 
@@ -69,25 +69,25 @@ var makeBlock = function (y, x) {
                 break;
         }
 
-        if (!isBlocked && mazeMap[nextY][nextX].created == false) {
+        if (!isBlocked && mazeData[nextY][nextX].created == false) {
             console.log("nextBlock : " + nextX + " / " + nextY);
-            mazeMap[nextY][nextX].created = true;
+            mazeData[nextY][nextX].created = true;
             switch (wayArray[orderIndex]) {
                 case WAY_LEFT:
-                    mazeMap[y][x].left = true;
-                    mazeMap[nextY][nextX].right = true;
+                    mazeData[y][x].left = true;
+                    mazeData[nextY][nextX].right = true;
                     break;
                 case WAY_TOP:
-                    mazeMap[y][x].top = true;
-                    mazeMap[nextY][nextX].bottom = true;
+                    mazeData[y][x].top = true;
+                    mazeData[nextY][nextX].bottom = true;
                     break;
                 case WAY_RIGHT:
-                    mazeMap[y][x].right = true;
-                    mazeMap[nextY][nextX].left = true;
+                    mazeData[y][x].right = true;
+                    mazeData[nextY][nextX].left = true;
                     break;
                 case WAY_BOTTOM:
-                    mazeMap[y][x].bottom = true;
-                    mazeMap[nextY][nextX].top = true;
+                    mazeData[y][x].bottom = true;
+                    mazeData[nextY][nextX].top = true;
                     break;
             }
             makeBlock(nextY, nextX);
@@ -120,7 +120,7 @@ var printMapTest = function () {
         drawString = '';
         for (var j = 0; j < mazeMaxSize; j++) {
             var drawTopLine = wall;
-            if (mazeMap[i][j].top) {
+            if (mazeData[i][j].top) {
                 drawTopLine += line;
             } else {
                 drawTopLine += wall;
@@ -137,7 +137,7 @@ var printMapTest = function () {
         drawString = '';
         for (var j = 0; j < mazeMaxSize; j++) {
             var drawLeft = '';
-            if (mazeMap[i][j].left) {
+            if (mazeData[i][j].left) {
                 drawLeft += line;
             } else {
                 drawLeft += wall;

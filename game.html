@@ -45,15 +45,18 @@
     <script src='./touchCtrl.js'></script>
     <script src='./makeMaze.js'></script>
     <script>
+        makeMap(3);
+
         function draw() {
+
+            if (!isMoving) return;
             updateDrawOffset();
             clearView();
             drawTile();
             drawCircle();
-
         }
 
-        var drawInterval = setInterval(draw, 1000);
+        var drawInterval = setInterval(draw, 100);
         //clearInterval(drawInterval);
 
     </script>

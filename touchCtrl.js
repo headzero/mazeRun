@@ -1,5 +1,7 @@
+var isMoving = true;
 canvas.addEventListener('touchstart',
     function (touchEvent) {
+        isMoving = true;
         var touchButtonNum = touchPositionToButtonNum(getTouchPos(touchEvent));
         setLastInput(touchButtonNum);
     });
@@ -10,7 +12,7 @@ canvas.addEventListener('touchmove',
     });
 canvas.addEventListener('touchend',
     function (touchEvent) {
-        console.log('end ');
+        isMoving = false;
         setLastInput(TOUCH_MIDDLE);
     });
 
