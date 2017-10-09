@@ -1,14 +1,17 @@
 canvas.addEventListener('touchstart', 
-        function(touchEvent){
-            console.log('start ' + touchPositionToButtonNum(getTouchPos(touchEvent)));
-        });
+    function(touchEvent){
+        var touchButtonNum = touchPositionToButtonNum(getTouchPos(touchEvent));
+        setLastInput(touchButtonNum);
+    });
 canvas.addEventListener('touchmove', 
     function(touchEvent){
-        console.log('move ' + touchPositionToButtonNum(getTouchPos(touchEvent)));
+        var touchButtonNum = touchPositionToButtonNum(getTouchPos(touchEvent));
+        setLastInput(touchButtonNum);
     });
 canvas.addEventListener('touchend', 
     function(touchEvent){
         console.log('end ');
+        setLastInput(TOUCH_MIDDLE);
     });
 
 var canvasWidthLeft = canvasWidth / 3;
