@@ -1,15 +1,15 @@
-canvas.addEventListener('touchstart', 
-    function(touchEvent){
+canvas.addEventListener('touchstart',
+    function (touchEvent) {
         var touchButtonNum = touchPositionToButtonNum(getTouchPos(touchEvent));
         setLastInput(touchButtonNum);
     });
-canvas.addEventListener('touchmove', 
-    function(touchEvent){
+canvas.addEventListener('touchmove',
+    function (touchEvent) {
         var touchButtonNum = touchPositionToButtonNum(getTouchPos(touchEvent));
         setLastInput(touchButtonNum);
     });
-canvas.addEventListener('touchend', 
-    function(touchEvent){
+canvas.addEventListener('touchend',
+    function (touchEvent) {
         console.log('end ');
         setLastInput(TOUCH_MIDDLE);
     });
@@ -29,27 +29,27 @@ var TOUCH_LOWER_LEFT = 7;
 var TOUCH_LOWER = 8;
 var TOUCH_LOWER_RIGHT = 9;
 
-var touchPositionToButtonNum = function(touchPosition){
-    if(touchPosition.y < canvasHeightUpper){ // upper line
-        if(touchPosition.x < canvasWidthLeft){ // left
+var touchPositionToButtonNum = function (touchPosition) {
+    if (touchPosition.y < canvasHeightUpper) { // upper line
+        if (touchPosition.x < canvasWidthLeft) { // left
             return TOUCH_UPPER_LEFT;
-        } else if (touchPosition.x < canvasWidthRight){ // middle
+        } else if (touchPosition.x < canvasWidthRight) { // middle
             return TOUCH_UPPER;
         } else { // right
             return TOUCH_UPPER_RIGHT;
         }
-    } else if(touchPosition.y < canvasHeightLower){ // middle line;
-        if(touchPosition.x < canvasWidthLeft){ // left
+    } else if (touchPosition.y < canvasHeightLower) { // middle line;
+        if (touchPosition.x < canvasWidthLeft) { // left
             return TOUCH_LEFT
-        } else if (touchPosition.x < canvasWidthRight){ // middle
+        } else if (touchPosition.x < canvasWidthRight) { // middle
             return TOUCH_MIDDLE;
         } else { // right
             return TOUCH_RIGHT;
         }
     } else { // lower line;
-        if(touchPosition.x < canvasWidthLeft){ // left
+        if (touchPosition.x < canvasWidthLeft) { // left
             return TOUCH_LOWER_LEFT;
-        } else if (touchPosition.x < canvasWidthRight){ // middle
+        } else if (touchPosition.x < canvasWidthRight) { // middle
             return TOUCH_LOWER;
         } else { // right
             return TOUCH_LOWER_RIGHT;

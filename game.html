@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <!-- 참조 : https://developer.mozilla.org/ko/docs/Games/Tutorials/%EC%88%9C%EC%88%98%ED%95%9C_%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC_%EC%9D%B4%EC%9A%A9%ED%95%9C_2D_%EB%B2%BD%EB%8F%8C%EA%B9%A8%EA%B8%B0_%EA%B2%8C%EC%9E%84 -->
     <meta charset="utf-8" />
@@ -7,40 +8,53 @@
     <meta id="viewport" name="viewport">
 
     <script type="text/javascript">
-        function apply_viewport(){
-          var ww = window.screen.width;
-          var mw = 480; // min width of site
-          var ratio =  ww / mw; //calculate ratio
-          var viewport_meta_tag = document.getElementById('viewport');
+        function apply_viewport() {
+            var ww = window.screen.width;
+            var mw = 480; // min width of site
+            var ratio = ww / mw; //calculate ratio
+            var viewport_meta_tag = document.getElementById('viewport');
             viewport_meta_tag.setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=no, width=' + mw);
         }
         apply_viewport();
+
     </script>
     <style>
-    	* { padding: 0; margin: 0; }
-        body {background:#222;}
-    	canvas { background: #000; display: block; margin: 0 auto; }
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            background: #222;
+        }
+        
+        canvas {
+            background: #000;
+            display: block;
+            margin: 0 auto;
+        }
+
     </style>
 </head>
-    
+
 <body>
 
-<canvas id="myCanvas" width="480" height="720"></canvas>
+    <canvas id="myCanvas" width="480" height="720"></canvas>
 
-<script src='./drawCtrl.js'></script>
-<script src='./touchCtrl.js'></script>
-<script>
-    
-    function draw(){
-        updateDrawOffset();
-        clearView();
-        drawCircle();
-    }
-    
-    var drawInterval = setInterval(draw, 1000);
-    //clearInterval(drawInterval);
+    <script src='./drawCtrl.js'></script>
+    <script src='./touchCtrl.js'></script>
+    <script>
+        function draw() {
+            updateDrawOffset();
+            clearView();
+            drawCircle();
+        }
 
-</script>
+        var drawInterval = setInterval(draw, 1000);
+        //clearInterval(drawInterval);
+
+    </script>
 
 </body>
+
 </html>
