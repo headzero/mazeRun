@@ -12,8 +12,6 @@ var canvasRect = canvas.getBoundingClientRect();
 var charPosX = canvasWidth / 2;
 var charPosY = canvasHeight / 2;
 var charSize = 64;
-var dx = -2;
-var dy = 2;
 var offsetX = 0;
 var offsetY = 0;
 var lastOffsetX = 0; // 충돌 처리 후 복구하기 위함
@@ -160,7 +158,10 @@ var checkCollisionWall = function () {
     } else if ((mazeBlockX == mazeMaxSize - 1 && mazeBlockY == mazeMaxSize - 1) &&
         currentXInBlock > tileSize && currentYInBlock > tileSize) {
         isFinish = true;
-        alert("Success!!!");
+        if (confirm("성공!! 다음단계로")) {
+            startMapSize++;
+            initStage();
+        }
     }
     return false;
 }
