@@ -17,7 +17,19 @@
 
 <script src='./drawCtrl.js'></script>
 <script>
-    
+    canvas.addEventListener('touchstart', 
+                            function(touchEvent){
+                                console.log('start ' + getTouchPos(touchEvent).y);
+                            });
+    canvas.addEventListener('touchmove', 
+                            function(touchEvent){
+                                console.log('move ' + getTouchPos(touchEvent).x);
+                            });
+    canvas.addEventListener('touchend', 
+                            function(touchEvent){
+                                console.log('end ');
+                                console.log(touchEvent);
+                            });
     function draw(){
         clearView();
         drawCircle();
