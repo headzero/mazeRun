@@ -30,6 +30,7 @@ var makeMap = function (mazeSize) {
         }
     }
     console.log(mazeMap);
+    mazeMap[0][0].created = true;
     makeBlock(0, 0);
 }
 
@@ -41,31 +42,26 @@ var makeBlock = function (y, x) {
         var nextX = x;
         var nextY = y;
         var isBlocked = true;
-        console.log(wayArray[orderIndex]);
         switch (wayArray[orderIndex]) {
             case WAY_LEFT:
-                console.log("check left");
                 if (x > 0) {
                     nextX--;
                     isBlocked = false;
                 }
                 break;
             case WAY_TOP:
-                console.log("check top");
                 if (y > 0) {
                     nextY--;
                     isBlocked = false;
                 }
                 break;
             case WAY_RIGHT:
-                console.log("check right");
                 if (x < mazeMaxSize - 1) {
                     nextX++;
                     isBlocked = false;
                 }
                 break;
             case WAY_BOTTOM:
-                console.log("check bottom");
                 if (y < mazeMaxSize - 1) {
                     nextY++;
                     isBlocked = false;
@@ -74,7 +70,7 @@ var makeBlock = function (y, x) {
         }
 
         if (!isBlocked && mazeMap[nextY][nextX].created == false) {
-            console.log("nextBlock : " + nextY + " / " + nextX);
+            console.log("nextBlock : " + nextX + " / " + nextY);
             mazeMap[nextY][nextX].created = true;
             switch (wayArray[orderIndex]) {
                 case WAY_LEFT:
