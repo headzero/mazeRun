@@ -1,6 +1,9 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-
+var charactor = new Image();
+charactor.src = 'images/rabbit.png';
+var tileImage = new Image();
+tileImage.src = 'images/bg_sprite.png';
 var lastInputButton = 5;
 
 var canvasWidth = canvas.width;
@@ -26,12 +29,11 @@ var clearView = function () {
 }
 
 var drawCircle = function () {
-    ctx.beginPath();
-    console.log("x : " + (charPosX + offsetX) + " / y : " + (charPosY + offsetY));
-    ctx.arc(charPosX + offsetX, charPosY + offsetY, 10, 0, Math.PI * 2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
+    ctx.drawImage(charactor, charPosX, charPosY, 48, 48);
+}
+
+var drawTile = function () {
+    ctx.drawImage(tileImage, 140, 0, 70, 70, charPosX + offsetX, charPosY + offsetY, 64, 64);
 }
 
 var setLastInput = function (buttonNum) {

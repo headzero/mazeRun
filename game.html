@@ -48,7 +48,9 @@
         function draw() {
             updateDrawOffset();
             clearView();
+            drawTile();
             drawCircle();
+
         }
 
         var drawInterval = setInterval(draw, 1000);
