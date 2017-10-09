@@ -12,6 +12,8 @@ var WAY_BOTTOM = 3;
 
 var mazeData;
 var mazeMaxSize = 0;
+var mazeBlockX = 0;
+var mazeBlockY = 0;
 
 var makeMap = function (mazeSize) {
     mazeMaxSize = mazeSize;

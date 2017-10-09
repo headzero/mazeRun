@@ -11,16 +11,13 @@ var canvasHeight = canvas.height;
 var canvasRect = canvas.getBoundingClientRect();
 var charPosX = canvasWidth / 2;
 var charPosY = canvasHeight / 2;
+var charSize = 64;
 var dx = -2;
 var dy = 2;
 var offsetX = 0;
 var offsetY = 0;
-var moveAmount = 5;
+var moveAmount = 12;
 
-var tileType = 0; // 0 = green, 1 = block, 2 = green;
-var tileSize = 64;
-var tilePerBlock = 5;
-var lastTileIndex = tilePerBlock - 1;
 var getTouchPos = function (touchEvent) {
     return {
         x: touchEvent.touches[0].clientX - canvasRect.left,
@@ -33,24 +30,39 @@ var clearView = function () {
 }
 
 var drawCircle = function () {
-    ctx.drawImage(charactor, charPosX, charPosY, 48, 48);
+    ctx.drawImage(charactor, charPosX, charPosY, charSize, charSize);
 }
 
 var drawTile = function () {
     if (mazeData == undefined) return;
-    drawBlock(0, 0);
-    //    ctx.drawImage(tileImage, 140, 0, 70, 70, charPosX + offsetX, charPosY + offsetY, 64, 64);
-
+    // memo : 주변 9개 블럭까지만 그린다.
+    drawBlock(mazeBlockX - 1, mazeBlockY - 1);
+    drawBlock(mazeBlockX, mazeBlockY - 1);
+    drawBlock(mazeBlockX + 1, mazeBlockY - 1);
+    drawBlock(mazeBlockX - 1, mazeBlockY);
+    drawBlock(mazeBlockX, mazeBlockY);
+    drawBlock(mazeBlockX + 1, mazeBlockY);
+    drawBlock(mazeBlockX - 1, mazeBlockY + 1);
+    drawBlock(mazeBlockX, mazeBlockY + 1);
+    drawBlock(mazeBlockX + 1, mazeBlockY + 1);
 }
 
-// block width = tileSize * 5;
-var blockOffset = (tileSize * tilePerBlock) / 2;
-var drawBlock = function (x, y) {
-    var block = mazeData[x][y];
-    for (var x = 0; x < tilePerBlock; x++) {
-        for (var y = 0; y < tilePerBlock; y++) {
-            var blockOffsetX = (tileSize * x) - blockOffset;
-            var blockOffsetY = (tileSize * y) - blockOffset;
+
+var tileType = 0; // 0 = green, 1 = block, 2 = green;
+var tileSize = 64;
+var tilePerBlock = 5;
+var lastTileIndex = tilePerBlock - 1;
+var blockWidth = tileSize * tilePerBlock;
+var blockOffset = blockWidth / 2;
+
+var drawBlock = function (mazeIndexX, mazeIndexY) {
+    if (mazeIndexX < 0 || mazeIndexX >= mazeMaxSize || mazeIndexY < 0 || mazeIndexY >= mazeMaxSize) return;
+
+    var block = mazeData[mazeIndexY][mazeIndexX];
+    for (var y = 0; y < tilePerBlock; y++) {
+        for (var x = 0; x < tilePerBlock; x++) {
+            var blockOffsetX = (tileSize * x) - blockOffset + (mazeIndexX * blockWidth);
+            var blockOffsetY = (tileSize * y) - blockOffset + (mazeIndexY * blockWidth);
             if ((x == 0 && y == 0) || (x == lastTileIndex && y == 0) ||
                 (x == 0 && y == lastTileIndex) || (x == lastTileIndex && y == lastTileIndex)) {
                 createBlock(1, blockOffsetX, blockOffsetY);
@@ -105,4 +117,7 @@ var updateDrawOffset = function () {
             offsetY += -moveAmount;
             break;
     }
+
+    mazeBlockX = Math.floor(-(offsetX - blockOffset) / blockWidth);
+    mazeBlockY = Math.floor(-(offsetY - blockOffset) / blockWidth);
 }
