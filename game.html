@@ -45,9 +45,11 @@
     <script src='./touchCtrl.js'></script>
     <script src='./makeMaze.js'></script>
     <script>
+        var gameTime = 0;
         var startMapSize = 3;
         var initStage = function() {
             makeMap(startMapSize);
+            gameTime = new Date();
             isFinish = false;
             lastInputButton = 5;
             offsetX = 0;
@@ -61,12 +63,13 @@
         initStage();
 
         function draw() {
-
-            if (!isMoving) return;
-            updateDrawOffset();
-            clearView();
-            drawTile();
-            drawCircle();
+            if (isMoving) {
+                updateDrawOffset();
+                clearView();
+                drawTile();
+                drawChar();
+            }
+            drawSpendTime();
         }
 
         var drawInterval = setInterval(draw, 30);

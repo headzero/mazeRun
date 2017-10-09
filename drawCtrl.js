@@ -1,5 +1,7 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+ctx.font = "30px Georgia";
+ctx.fillStyle = 'white';
 var charactor = new Image();
 charactor.src = 'images/rabbit.png';
 var tileImage = new Image();
@@ -30,8 +32,17 @@ var clearView = function () {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 }
 
-var drawCircle = function () {
+var drawChar = function () {
     ctx.drawImage(charactor, charPosX, charPosY, charSize, charSize);
+}
+
+var drawSpendTime = function () {
+    ctx.fillText("TIME - " + secFormat(new Date() - gameTime), 10, 50);
+}
+
+var secFormat = function (diffLong) {
+    var seconds = Math.floor(diffLong / 1000);
+    return parseInt(seconds / 60 % 60) + ':' + seconds % 60;
 }
 
 var drawTile = function () {
@@ -158,7 +169,7 @@ var checkCollisionWall = function () {
     } else if ((mazeBlockX == mazeMaxSize - 1 && mazeBlockY == mazeMaxSize - 1) &&
         currentXInBlock > tileSize && currentYInBlock > tileSize) {
         isFinish = true;
-        if (confirm("성공!! 다음단계로")) {
+        if (confirm("걸린시간 : " + secFormat(new Date() - gameTime) + "초, 다음단계로 ->")) {
             startMapSize++;
             initStage();
         }
